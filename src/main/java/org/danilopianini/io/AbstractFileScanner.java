@@ -84,8 +84,10 @@ public abstract class AbstractFileScanner implements Runnable {
 		if (f.isDirectory() && (followH || !f.isHidden())) {
 			foundDirectory(f);
 			final File[] list = f.listFiles();
-			for (final File s : list) {
-				scan(s);
+			if (list != null) {
+				for (final File s : list) {
+					scan(s);
+				}
 			}
 			exitDirectory(f);
 		} else {

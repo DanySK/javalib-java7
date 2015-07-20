@@ -23,11 +23,6 @@ public abstract class AbstractService extends Thread {
 	private boolean isAlive = true;
 
 	/**
-	 * @see java.lang.Thread#run()
-	 */
-	public abstract void run();
-
-	/**
 	 * If called, the service must stop.
 	 */
 	public abstract void stopService();

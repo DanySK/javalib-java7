@@ -29,7 +29,7 @@ public class TestRegex {
 		tests.put("-Infinity", false);
 		tests.put("-1.256e-9", true);
 		tests.put("+1.256e+9", true);
-		for (Entry<String, Boolean> e : tests.entrySet()) {
+		for (final Entry<String, Boolean> e : tests.entrySet()) {
 			if (e.getValue()) {
 				Assert.assertTrue(matchFloat(e.getKey()));
 			} else {

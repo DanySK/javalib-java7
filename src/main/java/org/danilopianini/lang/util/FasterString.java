@@ -17,6 +17,8 @@ import com.google.common.hash.HashCode;
 import com.google.common.hash.HashFunction;
 import com.google.common.hash.Hashing;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 /**
  * This class wraps java.lang.String and provides faster equals(). Used
  * internally to ensure better performances. The faster comparison is realized
@@ -31,10 +33,10 @@ public class FasterString implements Cloneable, Serializable, Comparable<FasterS
 	private static final long serialVersionUID = -3490623928660729120L;
 	private static final Charset CHARSET = StandardCharsets.UTF_8;
 	private static final HashFunction HASHF = Hashing.murmur3_128();
-	// TODO: Taken from it.unibo.alchemist.global
-	public static final byte ENCODING_BASE = 36;
+	private static final byte ENCODING_BASE = 36;
 	
 	private String base;
+	@SuppressFBWarnings(justification = "This hash is recomputed if needed after de-serialization.")
 	private transient HashCode hash;
 	private long hash64bit;
 	private int hash32bit;
