@@ -27,6 +27,13 @@ repositories {
     mavenCentral()
 }
 
+configurations.all {
+  	resolutionStrategy {
+	    failOnVersionConflict()
+    }
+}
+
+
 configurations {
     doc {
         transitive false
