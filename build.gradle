@@ -38,6 +38,9 @@ configurations {
     doc {
         transitive false
     }
+    compile {
+        exclude module: 'xml-apis'
+    }
     doclet
 }
 
