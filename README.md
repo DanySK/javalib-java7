@@ -15,8 +15,8 @@ I warmly suggest to use Gradle, Maven or a similar system to deal with dependenc
 </dependency>
 ```
 or the following Gradle dependency:
-```
-compile 'org.danilopianini:javalib-java7:0.0.3'
+```Gradle
+compile 'org.danilopianini:javalib-java7:VERSION_YOU_WANT_TO_USE'
 ```
 Alternatively, you can grab the latest jar and throw it in your classpath. In this case, be sure to include the dependencies of this project in your classpath.
 
