@@ -38,16 +38,16 @@ Complete build reports can be downloaded [here][reports]
 [![Build Status](https://drone.io/github.com/DanySK/javalib-java7/status.png)](https://drone.io/github.com/DanySK/javalib-java7/latest)
 
 ### Main project
-[Build reports][dashboard]
-[Test summary][test]
-[FindBugs violations][findbugs]
-[PMD violations][pmd]
-[Checkstyle violations][checkstyle]
+* [Build reports][dashboard]
+* [Test summary][test]
+* [FindBugs violations][findbugs]
+* [PMD violations][pmd]
+* [Checkstyle violations][checkstyle]
 
 ### Tests
-[FindBugs violations][findbugs-test]
-[PMD violations][pmd-test]
-[Checkstyle violations][checkstyle-test]
+* [FindBugs violations][findbugs-test]
+* [PMD violations][pmd-test]
+* [Checkstyle violations][checkstyle-test]
 
 
 ## Notes for Developers
