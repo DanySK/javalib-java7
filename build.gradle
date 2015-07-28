@@ -124,6 +124,7 @@ findbugs {
 	ignoreFailures = true
 	effort = "max"
 	reportLevel = "low"
+	excludeFilterConfig = resources.text.fromFile("findbugsExcludes.xml")
 }
 
 tasks.withType(FindBugs) {

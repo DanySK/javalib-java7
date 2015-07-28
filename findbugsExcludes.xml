@@ -1,0 +1,5 @@
+<FindBugsFilter>
+	<Match>
+		<Bug pattern="CN_IDIOM_NO_SUPER_CALL" />
+	</Match>
+</FindBugsFilter>
