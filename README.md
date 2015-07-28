@@ -7,7 +7,7 @@ A set of utilities for Java 7 programs, released under Apache License 2.0.
 ### Using Javalib-Java7 in your project
 
 I warmly suggest to use Gradle, Maven or a similar system to deal with dependencies within your project. In this case, you can use this product by importing the following Maven dependency:
-```Maven POM
+```xml
 <dependency>
     <groupId>org.danilopianini</groupId>
     <artifactId>javalib-java7</artifactId>
