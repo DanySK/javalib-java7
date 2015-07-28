@@ -11,7 +11,7 @@ I warmly suggest to use Gradle, Maven or a similar system to deal with dependenc
 <dependency>
     <groupId>org.danilopianini</groupId>
     <artifactId>javalib-java7</artifactId>
-    <version>VERSION\_YOU\_WANT\_TO\_USE</version>
+    <version>VERSION_YOU_WANT_TO_USE</version>
 </dependency>
 ```
 or the following Gradle dependency:
