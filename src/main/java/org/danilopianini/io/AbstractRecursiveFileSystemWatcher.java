@@ -40,16 +40,18 @@ public abstract class AbstractRecursiveFileSystemWatcher extends AbstractFileSys
 	 * @throws IOException
 	 *             in case of I/O Error
 	 */
-	public AbstractRecursiveFileSystemWatcher(final String dir,
-			final ThreadManager threadManager) throws IOException {
+	public AbstractRecursiveFileSystemWatcher(final String dir, final ThreadManager threadManager) throws IOException {
 		super(dir);
 		this.tm = threadManager;
-		for (final File f : getPath().toFile().listFiles()) {
-			if (f.isDirectory()) {
-				final Path p = FileSystems.getDefault().getPath(f.toString());
-				final AbstractRecursiveFileSystemWatcher w = build(f);
-				threadManager.addService(w);
-				map.put(p, w);
+		final File[] files = getPath().toFile().listFiles();
+		if (files != null) {
+			for (final File f : files) {
+				if (f.isDirectory()) {
+					final Path p = FileSystems.getDefault().getPath(f.toString());
+					final AbstractRecursiveFileSystemWatcher w = build(f);
+					threadManager.addService(w);
+					map.put(p, w);
+				}
 			}
 		}
 	}
