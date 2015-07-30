@@ -15,6 +15,8 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 /**
  * A class to easy manage multithreaded applications. It contains two
  * schedulers, one of them is meant to execute those Threads which run a task
@@ -109,6 +111,8 @@ public class ThreadManager {
 	 * @throws NoSuchMethodException
 	 *             if the method does not exist
 	 */
+	@Deprecated
+	@SuppressFBWarnings("RV_RETURN_VALUE_IGNORED_BAD_PRACTICE")
 	public void execute(final Object obj, final String method, final Object[] args) throws NoSuchMethodException {
 		Class<?>[] classes = new Class<?>[args.length];
 		for (int i = 0; i < args.length; i++) {
