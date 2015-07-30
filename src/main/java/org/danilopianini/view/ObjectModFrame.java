@@ -10,6 +10,8 @@ import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.lang.reflect.Field;
+import java.security.AccessController;
+import java.security.PrivilegedAction;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -228,7 +230,7 @@ public class ObjectModFrame extends JFrame {
 				final String expName = f.getAnnotation(ExportForGUI.class).nameToExport();
 				final boolean accessible = f.isAccessible();
 				if (!accessible) {
-					f.setAccessible(true);
+					setAccess(f, true);
 				}
 				if (assignable(RangedInteger.class, f)) {
 					contents.add(new RangedIntegerGUIComponent(expName, (RangedInteger) f.get(obj)));
@@ -241,12 +243,22 @@ public class ObjectModFrame extends JFrame {
 				} else if (CollectionWithCurrentElement.class.isAssignableFrom(f.getType())) {
 					contents.add(new CurrentCollectionGUIComponent(expName, obj, f));
 				} else {
-					f.setAccessible(accessible);
+					setAccess(f, accessible);
 				}
 			}
 		}
 		getContentPane().add(contents);
 		pack();
+	}
+	
+	private static void setAccess(final Field f, final boolean accessible) {
+		AccessController.doPrivileged(new PrivilegedAction<Void>() {
+			@Override
+			public Void run() {
+				f.setAccessible(accessible);
+				return null;
+			}
+		});
 	}
 
 	/**
@@ -295,5 +307,4 @@ public class ObjectModFrame extends JFrame {
 	    return fields;
 	}
 
-	
 }
