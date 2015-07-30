@@ -11,6 +11,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 /**
  * 
  * @author matheusdev
@@ -230,6 +232,7 @@ public class QuadTree<E> implements Serializable {
 		}
 	}
 
+	@SuppressFBWarnings("FE_FLOATING_POINT_EQUALITY")
 	private boolean remove(final E e, final double x, final double y) {
 		for (int i = 0; i < elements.size(); i++) {
 			final QuadTreeEntry<E> entry = elements.get(i);
@@ -241,6 +244,7 @@ public class QuadTree<E> implements Serializable {
 		return false;
 	}
 
+	@SuppressFBWarnings("FE_FLOATING_POINT_EQUALITY")
 	private int searchAtThisLevel(final E e, final double x, final double y) {
 		for (int i = 0; i < elements.size(); i++) {
 			final QuadTreeEntry<E> entry = elements.get(i);
