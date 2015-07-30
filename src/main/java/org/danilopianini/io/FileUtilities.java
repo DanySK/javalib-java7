@@ -8,15 +8,11 @@ package org.danilopianini.io;
 
 import java.awt.Image;
 import java.awt.Toolkit;
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.ObjectInputStream;
@@ -38,6 +34,8 @@ import com.google.common.base.Charsets;
  * 
  */
 public final class FileUtilities {
+	
+	private static final String BACKUP_EXTENSION = ".bak";
 
 	/**
 	 * This method provides a shortcut to deep clone Serializable objects.
@@ -169,9 +167,39 @@ public final class FileUtilities {
 	 * @return the file as String
 	 * @throws IOException
 	 *             in case of I/O errors
+	 * @deprecated Use {@link FileUtilities#fileUTF8ToString(String)} instead, or specify a {@link Charset}.
 	 */
+	@Deprecated
 	public static String fileToString(final String path) throws IOException {
 		return fileToString(new File(path));
+	}
+
+	/**
+	 * This method tries to read a file and to instance it as a String.
+	 * 
+	 * @param path
+	 *            the path of the file to read
+	 * @return the file as String
+	 * @throws IOException
+	 *             in case of I/O errors
+	 */
+	public static String fileUTF8ToString(final String path) throws IOException {
+		return fileToString(path, Charsets.UTF_8);
+	}
+
+	/**
+	 * This method tries to read a file and to instance it as a String.
+	 * 
+	 * @param path
+	 *            the path of the file to read
+	 * @param c
+	 *            the {@link Charset} to use
+	 * @return the file as String
+	 * @throws IOException
+	 *             in case of I/O errors
+	 */
+	public static String fileToString(final String path, final Charset c) throws IOException {
+		return FileUtils.readFileToString(new File(path), c.name());
 	}
 
 	/**
@@ -224,12 +252,15 @@ public final class FileUtilities {
 	public static void objectToFile(final Object s, final File f, final boolean backup) throws IOException {
 		final String op = f.getAbsolutePath();
 		if (backup && f.exists()) {
-			f.renameTo(new File(op + ".bak"));
+			if (!f.renameTo(new File(op + BACKUP_EXTENSION))) {
+				throw new IOException("Can not move " + op + " to " + op + BACKUP_EXTENSION);
+			}
 		}
 		final File ef = new File(op);
-		final ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(ef));
-		oos.writeObject(s);
-		oos.close();
+		try (final ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(ef))) {
+			oos.writeObject(s);
+			oos.close();
+		}
 	}
 
 	/**
@@ -281,16 +312,17 @@ public final class FileUtilities {
 	 *            decides whether to append or overwrite the file
 	 * @throws IOException
 	 *             in case of I/O errors
+	 * @deprecated use {@link FileUtils#writeStringToFile(File, String, Charset)} instead
 	 */
+	@Deprecated
 	public static void stringToFile(final String s, final File f, final boolean append) throws IOException {
 		final String op = f.getAbsolutePath();
 		if (f.exists()) {
-			f.renameTo(new File(op + ".bak"));
+			if (!f.renameTo(new File(op + BACKUP_EXTENSION))) {
+				throw new IOException("Can not move " + op + " to " + op + BACKUP_EXTENSION);
+			}
 		}
-		final File ef = new File(op);
-		final BufferedWriter bw = new BufferedWriter(new FileWriter(ef, append));
-		bw.write(s);
-		bw.close();
+		FileUtils.writeStringToFile(f, s);
 	}
 
 	/**
@@ -303,9 +335,10 @@ public final class FileUtilities {
 	 *            the path of the File to write to
 	 * @throws IOException
 	 *             in case of I/O errors
+	 * @deprecated use {@link FileUtils#writeStringToFile(File, String, Charset)} instead
 	 */
 	public static void stringToFile(final String string, final String path) throws IOException {
-		stringToFile(string, new File(path), false);
+		stringToFile(string, path, false);
 	}
 
 	/**
@@ -319,6 +352,7 @@ public final class FileUtilities {
 	 *            decides whether to append or overwrite the file
 	 * @throws IOException
 	 *             in case of I/O errors
+	 * @deprecated use {@link FileUtils#writeStringToFile(File, String, Charset, boolean)} instead
 	 */
 	public static void stringToFile(final String string, final String path, final boolean append) throws IOException {
 		stringToFile(string, new File(path), append);
