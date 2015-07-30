@@ -23,7 +23,12 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.net.URL;
+import java.nio.charset.Charset;
 import java.util.zip.CRC32;
+
+import org.apache.commons.io.FileUtils;
+
+import com.google.common.base.Charsets;
 
 /**
  * This is a collection of tools for manipulating the file system.
@@ -147,17 +152,13 @@ public final class FileUtilities {
 	 * @return the file as String
 	 * @throws IOException
 	 *             in case of I/O errors
+	 * @deprecated Developers should use
+	 *             {@link FileUtils#readFileToString(File, String)} from Apache
+	 *             Commons IO
 	 */
+	@Deprecated
 	public static String fileToString(final File f) throws IOException {
-		if (f.exists()) {
-			try (final BufferedReader br = new BufferedReader(new FileReader(f))) {
-				final char[] res = new char[(int) f.length()];
-				br.read(res);
-				br.close();
-				return new String(res);
-			}
-		}
-		return null;
+		return FileUtils.readFileToString(f, Charsets.UTF_8.name());
 	}
 
 	/**

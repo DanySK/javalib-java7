@@ -48,6 +48,7 @@ dependencies {
     compile "net.sf.trove4j:trove4j:$trove4jVersion"
     compile "com.google.guava:guava:$guavaVersion"
     compile "com.google.code.findbugs:findbugs:$findBugsVersion"
+    compile "commons-io:commons-io:$commonsIOVersion"
     
     testCompile "junit:junit:$junitVersion"
     
