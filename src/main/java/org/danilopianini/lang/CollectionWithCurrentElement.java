@@ -1,3 +1,9 @@
+/*******************************************************************************
+ * Copyright (C) 2009, 2015, Danilo Pianini and contributors
+ * listed in the project's build.gradle or pom.xml file.
+ *
+ * This file is distributed under the terms of the Apache License, version 2.0
+ *******************************************************************************/
 package org.danilopianini.lang;
 
 import java.util.Collection;
