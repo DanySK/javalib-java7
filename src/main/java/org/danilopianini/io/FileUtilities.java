@@ -88,15 +88,16 @@ public final class FileUtilities {
 	 *             if an I/O error occurs
 	 */
 	public static long fileCRC32sum(final File f) throws IOException {
-		final InputStream is = new FileInputStream(f);
-		final CRC32 crc = new CRC32();
-		int val;
-		do {
-			val = is.read();
-			crc.update(val);
-		} while (val != -1);
-		is.close();
-		return crc.getValue();
+		try (final InputStream is = new FileInputStream(f)) {
+			final CRC32 crc = new CRC32();
+			int val;
+			do {
+				val = is.read();
+				crc.update(val);
+			} while (val != -1);
+			is.close();
+			return crc.getValue();
+		}
 	}
 
 	/**
@@ -113,10 +114,11 @@ public final class FileUtilities {
 	 */
 	public static Serializable fileToObject(final File f) throws IOException, ClassNotFoundException {
 		if (f.exists()) {
-			final ObjectInputStream ois = new ObjectInputStream(new FileInputStream(f));
-			final Serializable res = (Serializable) ois.readObject();
-			ois.close();
-			return res;
+			try (final ObjectInputStream ois = new ObjectInputStream(new FileInputStream(f))) {
+				final Serializable res = (Serializable) ois.readObject();
+				ois.close();
+				return res;
+			}
 		}
 		return null;
 	}
@@ -148,11 +150,12 @@ public final class FileUtilities {
 	 */
 	public static String fileToString(final File f) throws IOException {
 		if (f.exists()) {
-			final BufferedReader br = new BufferedReader(new FileReader(f));
-			final char[] res = new char[(int) f.length()];
-			br.read(res);
-			br.close();
-			return new String(res);
+			try (final BufferedReader br = new BufferedReader(new FileReader(f))) {
+				final char[] res = new char[(int) f.length()];
+				br.read(res);
+				br.close();
+				return new String(res);
+			}
 		}
 		return null;
 	}
