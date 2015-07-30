@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.nio.file.FileSystems;
 import java.nio.file.Path;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.danilopianini.concurrency.ThreadManager;
@@ -115,8 +116,8 @@ public abstract class AbstractRecursiveFileSystemWatcher extends AbstractFileSys
 	@Override
 	public final void stopService() {
 		super.stopService();
-		for (final Path p : map.keySet()) {
-			map.get(p).stopService();
+		for (final Entry<Path, AbstractRecursiveFileSystemWatcher> p : map.entrySet()) {
+			p.getValue().stopService();
 		}
 		finalizeStop();
 	}
