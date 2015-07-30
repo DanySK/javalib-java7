@@ -251,10 +251,8 @@ public final class FileUtilities {
 	 */
 	public static void objectToFile(final Object s, final File f, final boolean backup) throws IOException {
 		final String op = f.getAbsolutePath();
-		if (backup && f.exists()) {
-			if (!f.renameTo(new File(op + BACKUP_EXTENSION))) {
-				throw new IOException("Can not move " + op + " to " + op + BACKUP_EXTENSION);
-			}
+		if (backup && f.exists() && !f.renameTo(new File(op + BACKUP_EXTENSION))) {
+			throw new IOException("Can not move " + op + " to " + op + BACKUP_EXTENSION);
 		}
 		final File ef = new File(op);
 		try (final ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(ef))) {
@@ -317,10 +315,8 @@ public final class FileUtilities {
 	@Deprecated
 	public static void stringToFile(final String s, final File f, final boolean append) throws IOException {
 		final String op = f.getAbsolutePath();
-		if (f.exists()) {
-			if (!f.renameTo(new File(op + BACKUP_EXTENSION))) {
-				throw new IOException("Can not move " + op + " to " + op + BACKUP_EXTENSION);
-			}
+		if (f.exists() && !f.renameTo(new File(op + BACKUP_EXTENSION))) {
+			throw new IOException("Can not move " + op + " to " + op + BACKUP_EXTENSION);
 		}
 		FileUtils.writeStringToFile(f, s);
 	}
