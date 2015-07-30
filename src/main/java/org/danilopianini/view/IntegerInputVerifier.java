@@ -35,11 +35,6 @@ public class IntegerInputVerifier extends InputVerifier implements Serializable 
 		status = verify(textField);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see javax.swing.InputVerifier#verify(javax.swing.JComponent)
-	 */
 	@Override
 	public final boolean verify(final JComponent input) {
 		if (input.equals(textField)) {
