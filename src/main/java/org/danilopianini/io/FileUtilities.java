@@ -284,10 +284,8 @@ public final class FileUtilities {
 	 * @param x
 	 *            the object to serialize
 	 * @return its byte array representation
-	 * @param <T>
-	 *            the Object type
 	 */
-	public static <T extends Serializable> byte[] serializeObject(final T x) {
+	public static byte[] serializeObject(final Serializable x) {
 		try {
 			final ByteArrayOutputStream bout = new ByteArrayOutputStream();
 			final ObjectOutputStream cout = new ObjectOutputStream(bout);
