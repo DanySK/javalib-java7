@@ -277,8 +277,8 @@ public final class HashUtils {
 				for (final Object o: (Iterable<?>) data) {
 					populateHasher(o, h);
 				}
-			} else if (data instanceof Serializable) {
-				h.putBytes(FileUtilities.serializeObject((Serializable) data));
+//			} else if (data instanceof Serializable) {
+//				h.putBytes(FileUtilities.serializeObject((Serializable) data));
 			} else {
 				h.putInt(data.hashCode());
 			}
