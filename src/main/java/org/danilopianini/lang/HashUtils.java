@@ -28,6 +28,7 @@ import com.google.common.hash.Hashing;
 public final class HashUtils {
 
 	private static final HashFunction MURMUR32 = Hashing.murmur3_32();
+	private static final HashFunction MURMUR128 = Hashing.murmur3_128();
 	private static final Charset CHARSET = StandardCharsets.UTF_16;
 	private static final int MASK_BYTE = 0xff;
 	private static final int SHIFT3 = 24;
@@ -141,6 +142,111 @@ public final class HashUtils {
 		return h.hash().asInt();
 	}
 
+	/**
+	 * Computes a 64bit hash.
+	 * 
+	 * @param data
+	 *            the data to hash
+	 * @return a 64bit hash
+	 */
+	public static long hash64(final double data) {
+		return MURMUR128.hashLong(Double.doubleToRawLongBits(data)).asLong();
+	}
+
+	/**
+	 * Computes a 64bit hash.
+	 * 
+	 * @param data
+	 *            the data to hash
+	 * @return a 64bit hash
+	 */
+	public static long hash64(final long data) {
+		return MURMUR128.hashLong(data).asLong();
+	}
+
+	/**
+	 * Computes a 64bit hash.
+	 * 
+	 * @param data
+	 *            the data to hash
+	 * @return a 64bit hash
+	 */
+	public static long hash64(final float data) {
+		return hash32(data);
+	}
+
+	/**
+	 * Computes a 64bit hash.
+	 * 
+	 * @param data
+	 *            the data to hash
+	 * @return a 64bit hash
+	 */
+	public static long hash64(final CharSequence data) {
+		return MURMUR128.hashString(data, CHARSET).asLong();
+	}
+
+	/**
+	 * Computes a 64bit hash.
+	 * 
+	 * @param data
+	 *            the data to hash
+	 * @return a 64bit hash
+	 */
+	public static long hash64(final Integer data) {
+		return data;
+	}
+
+	/**
+	 * Computes a 64bit hash.
+	 * 
+	 * @param data
+	 *            the data to hash
+	 * @return a 64bit hash
+	 */
+	public static long hash64(final Float data) {
+		return hash32(data);
+	}
+
+	/**
+	 * Computes a 64bit hash.
+	 * 
+	 * @param data
+	 *            the data to hash
+	 * @return a 64bit hash
+	 */
+	public static long hash64(final Double data) {
+		return hash64(data.doubleValue());
+	}
+
+	/**
+	 * Computes a 64bit hash.
+	 * 
+	 * @param data
+	 *            the data to hash
+	 * @return a 64bit hash
+	 */
+	public static long hash64(final Long data) {
+		return hash64(data.longValue());
+	}
+
+	/**
+	 * Computes a 64bit hash.
+	 * 
+	 * @param data
+	 *            the data to hash
+	 * @return a 64bit hash
+	 */
+	public static long hash64(final Object... data) {
+		final Hasher h = MURMUR128.newHasher();
+		if (data.length == 1) {
+			populateHasher(data[0], h);
+		} else {
+			populateHasher(data, h);
+		}
+		return h.hash().asLong();
+	}
+	
 	private static void populateHasher(final Object data, final Hasher h) {
 		if (data != null) {
 			if (data instanceof Number) {
@@ -214,7 +320,10 @@ public final class HashUtils {
 	 * @param bytes
 	 *            bytes
 	 * @return DJB2 32bit hash
+	 * 
+	 * @deprecated This method may perform very badly, since it serializes objects in-memory. Prefer {@link HashUtils#hash32(Object...)}.
 	 */
+	@Deprecated
 	public static int djb2int32obj(final Serializable... bytes) {
 		return djb2int32(FileUtilities.serializeObject(bytes));
 	}
@@ -254,7 +363,10 @@ public final class HashUtils {
 	 * @param bytes
 	 *            bytes
 	 * @return DJB2 64bit hash
+	 * 
+	 * @deprecated This method may perform very badly, since it serializes objects in-memory. Prefer {@link HashUtils#hash64(Object...)}.
 	 */
+	@Deprecated
 	public static long djb2long64obj(final Serializable... bytes) {
 		return djb2long64(FileUtilities.serializeObject(bytes));
 	}
