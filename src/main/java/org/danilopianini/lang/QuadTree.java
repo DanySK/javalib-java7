@@ -18,8 +18,12 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
  * @author matheusdev
  * @author Danilo Pianini
  * 
+ * @deprecated This class is bugged, should be used by no one, and will be
+ *             removed in future versions of this software.
+ * 
  * @param <E>
  */
+@Deprecated
 public class QuadTree<E> implements Serializable {
 
 	private static final long serialVersionUID = -8765593946059102012L;
