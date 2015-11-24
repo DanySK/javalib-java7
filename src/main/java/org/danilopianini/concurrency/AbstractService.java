@@ -9,35 +9,33 @@ package org.danilopianini.concurrency;
 /**
  * Interface for a background service.
  * 
- * @author Danilo Pianini
- * @version 20111021
  * 
  */
 public abstract class AbstractService extends Thread {
 
-	/**
-	 * 
-	 */
-	private boolean isAlive = true;
+    /**
+     * 
+     */
+    private boolean isAlive = true;
 
-	/**
-	 * If called, the service must stop.
-	 */
-	public abstract void stopService();
+    /**
+     * If called, the service must stop.
+     */
+    public abstract void stopService();
 
-	/**
-	 * @return true if the service is alive
-	 */
-	public final boolean isServiceAlive() {
-		return isAlive;
-	}
+    /**
+     * @return true if the service is alive
+     */
+    public final boolean isServiceAlive() {
+        return isAlive;
+    }
 
-	/**
-	 * @param alive
-	 *            if false, the service will stop.
-	 */
-	public final void setAlive(final boolean alive) {
-		this.isAlive = alive;
-	}
+    /**
+     * @param alive
+     *            if false, the service will stop.
+     */
+    public final void setAlive(final boolean alive) {
+        this.isAlive = alive;
+    }
 
 }

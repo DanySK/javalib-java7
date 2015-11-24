@@ -13,25 +13,23 @@ import java.util.Map;
  * This map will accept up to a maximum number of elements, then it will start
  * to remove the eldest.
  * 
- * @author Danilo Pianini
- * 
  * @param <K>
  * @param <V>
  */
 public class MaxSizeHashMap<K, V> extends LinkedHashMap<K, V> {
-	private static final long serialVersionUID = -3498451801390527996L;
-	private final int maxSize;
+    private static final long serialVersionUID = -3498451801390527996L;
+    private final int maxSize;
 
-	/**
-	 * @param size maximum size for the map
-	 */
-	public MaxSizeHashMap(final int size) {
-		super();
-		this.maxSize = size;
-	}
+    /**
+     * @param size maximum size for the map
+     */
+    public MaxSizeHashMap(final int size) {
+        super();
+        this.maxSize = size;
+    }
 
-	@Override
-	protected boolean removeEldestEntry(final Map.Entry<K, V> eldest) {
-		return size() > maxSize;
-	}
+    @Override
+    protected boolean removeEldestEntry(final Map.Entry<K, V> eldest) {
+        return size() > maxSize;
+    }
 }

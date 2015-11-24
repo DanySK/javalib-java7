@@ -14,16 +14,14 @@ import java.lang.annotation.Target;
 /**
  * This annotation is exploited in order to identify the fields to load automatically in the {@link ObjectModFrame}.
  * 
- * @author Danilo Pianini
- *
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.FIELD)
 public @interface ExportForGUI {
-	
-	/**
-	 * The name which will be displayed on the graphical interface.
-	 */
-	String nameToExport();
+
+    /**
+     * @return The name which will be displayed on the graphical interface
+     */
+    String nameToExport();
 
 }
