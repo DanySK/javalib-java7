@@ -9,6 +9,8 @@ package org.danilopianini.view;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.GraphicsDevice;
+import java.awt.GraphicsEnvironment;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.Window;
@@ -199,6 +201,13 @@ public final class GUIUtilities {
                 JOptionPane.showMessageDialog(null, title, content, JOptionPane.WARNING_MESSAGE);
             }
         });
+    }
+
+    /**
+     * @return an array with the current {@link GraphicsDevice}
+     */
+    public static GraphicsDevice[] getGraphicDevices() {
+        return GraphicsEnvironment.getLocalGraphicsEnvironment().getScreenDevices();
     }
 
     private GUIUtilities() {
