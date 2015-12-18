@@ -7,27 +7,25 @@
 package org.danilopianini.lang;
 
 /**
- * @author Danilo Pianini
- * 
  */
 public final class Constants {
 
-	/**
-	 * DJB2 constants.
-	 */
-	public static final byte DJB2_MAGIC = 33, DJB2_SHIFT = 5, BIT_PER_BYTE = 8;
+    /**
+     * DJB2 constants.
+     */
+    public static final byte DJB2_MAGIC = 33, DJB2_SHIFT = 5, BIT_PER_BYTE = 8;
 
-	/**
-	 * DJB2 start value.
-	 */
-	public static final int DJB2_START = 5381;
-	
-	/**
-	 * Number of bytes composing a double.
-	 */
-	public static final byte DOUBLE_SIZE = 8;
+    /**
+     * DJB2 start value.
+     */
+    public static final int DJB2_START = 5381;
 
-	private Constants() {
-	}
+    /**
+     * Number of bytes composing a double.
+     */
+    public static final byte DOUBLE_SIZE = 8;
+
+    private Constants() {
+    }
 
 }

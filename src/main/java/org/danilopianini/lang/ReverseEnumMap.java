@@ -14,14 +14,12 @@ import gnu.trove.map.hash.TIntObjectHashMap;
 /**
  * This class provides a cache for a generic enum, mapping each value to an int.
  * 
- * @author Danilo Pianini
- *
  * @param <V>
  */
 public class ReverseEnumMap<V extends Enum<V>> implements Serializable {
-	private static final long serialVersionUID = 660169408203724941L;
-	private final TIntObjectMap<V> map = new TIntObjectHashMap<>();
-    
+    private static final long serialVersionUID = 660169408203724941L;
+    private final TIntObjectMap<V> map = new TIntObjectHashMap<>();
+
     /**
      * @param valueType the class to build the cache upon
      */

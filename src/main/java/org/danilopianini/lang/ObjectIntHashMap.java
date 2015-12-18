@@ -11,18 +11,16 @@ import gnu.trove.map.hash.TObjectIntHashMap;
 /**
  * A {@link TObjectIntHashMap} whose no_entry_value field is Integer.MIN_VALUE.
  * 
- * @author Danilo Pianini
- * 
  * @param <K>
  */
 public class ObjectIntHashMap<K> extends TObjectIntHashMap<K> {
 
-	/**
-	 * 
-	 */
-	public ObjectIntHashMap() {
-		super();
-		no_entry_value = Integer.MIN_VALUE;
-	}
+    /**
+     * 
+     */
+    public ObjectIntHashMap() {
+        super();
+        no_entry_value = Integer.MIN_VALUE;
+    }
 
 }

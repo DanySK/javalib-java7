@@ -11,35 +11,33 @@ import java.util.concurrent.Semaphore;
 /**
  * This class implements a non-reentrant ReadWriteLock.
  * 
- * @author Danilo Pianini
- * 
  */
 public class FastReadWriteLock {
 
-	private final Semaphore lock = new Semaphore(Integer.MAX_VALUE);
+    private final Semaphore lock = new Semaphore(Integer.MAX_VALUE);
 
-	/**
-	 * Acquire a read lock. Blocks until a read lock is available
-	 */
-	public void read() {
-		lock.acquireUninterruptibly();
-	}
+    /**
+     * Acquire a read lock. Blocks until a read lock is available
+     */
+    public void read() {
+        lock.acquireUninterruptibly();
+    }
 
-	/**
-	 * Acquire a write lock. Blocks until a write lock is available
-	 */
-	public void write() {
-		lock.acquireUninterruptibly(Integer.MAX_VALUE);
-	}
+    /**
+     * Acquire a write lock. Blocks until a write lock is available
+     */
+    public void write() {
+        lock.acquireUninterruptibly(Integer.MAX_VALUE);
+    }
 
-	/**
-	 * Signals that the operation is done.
-	 */
-	public void release() {
-		if (lock.availablePermits() == 0) {
-			lock.release(Integer.MAX_VALUE);
-		} else {
-			lock.release();
-		}
-	}
+    /**
+     * Signals that the operation is done.
+     */
+    public void release() {
+        if (lock.availablePermits() == 0) {
+            lock.release(Integer.MAX_VALUE);
+        } else {
+            lock.release();
+        }
+    }
 }
