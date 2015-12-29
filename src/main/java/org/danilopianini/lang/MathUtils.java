@@ -43,4 +43,17 @@ public final class MathUtils {
         return a >= b || fuzzyEquals(a, b);
     }
 
+    /**
+     * @param val the value
+     * @param v1 first value to compare to
+     * @param v2 second value to compare to
+     * @return v1 if val is closer to v1 than to v2, v2 otherwise
+     */
+    public static double closestTo(final double val, final double v1, final double v2) {
+        if (Math.abs(v1 - val) < Math.abs(v2 - val)) {
+            return v1;
+        }
+        return v2;
+    }
+
 }
