@@ -6,6 +6,7 @@
  *******************************************************************************/
 package org.danilopianini.lang;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -15,8 +16,9 @@ import java.util.NoSuchElementException;
 /**
  * @param <E>
  */
-public class ImmutableCollectionWithCurrentElement<E> implements CollectionWithCurrentElement<E> {
+public class ImmutableCollectionWithCurrentElement<E> implements CollectionWithCurrentElement<E>, Serializable {
 
+    private static final long serialVersionUID = 1L;
     private final Collection<E> col;
     private E cur;
 
