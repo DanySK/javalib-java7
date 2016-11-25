@@ -464,9 +464,9 @@ public final class HashUtils {
     }
 
     /**
-     * Runs System.identityHashCode(a) == System.identityHashCode(b). In most
-     * JVM implementations, this is actually a pointer comparison. Nevertheless,
-     * this is not guaranteed: handle with care
+     * Runs a == b to determine if two object are actually the same one or not.
+     * In most JVM implementations this is actually a pointer comparison. 
+     * Nevertheless, this is not guaranteed: handle with care
      * 
      * @param a
      *            an {@link Object}
@@ -475,7 +475,13 @@ public final class HashUtils {
      * @return System.identityHashCode(a) == System.identityHashCode(b)
      */
     public static boolean pointerEquals(final Object a, final Object b) {
-        return System.identityHashCode(a) == System.identityHashCode(b);
+        /* 
+         * The reason why this method does not perform 
+         * System.identityHashCode(a) == System.identityHashCode(b),
+         * which would have been a better choice, is due to 
+         * this bug: gs.java.com/view_bug.do?bug_id=6378256 
+         */
+        return a == b; //NOPMD
     }
 
     /**
