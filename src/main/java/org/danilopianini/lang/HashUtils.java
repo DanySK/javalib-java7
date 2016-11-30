@@ -465,8 +465,7 @@ public final class HashUtils {
 
     /**
      * Runs a == b to determine if two object are actually the same one or not.
-     * In most JVM implementations this is actually a pointer comparison. 
-     * Nevertheless, this is not guaranteed: handle with care
+     * This is actually a pointer comparison.
      * 
      * @param a
      *            an {@link Object}
