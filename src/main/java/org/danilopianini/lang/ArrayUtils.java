@@ -26,25 +26,6 @@ public final class ArrayUtils {
     }
 
     /**
-     * This function allows to clone an existing list and returns the new List.
-     * Current implementation returns an ArrayList.
-     * 
-     * @param toClone
-     *            the list to clone
-     * @param <T>
-     *            the generic type of the list to be cloned (same as the
-     *            resulting)
-     * @return the cloned list
-     */
-    public static <T> List<T> cloneList(final List<T> toClone) {
-        final List<T> res = new ArrayList<T>(toClone.size());
-        for (final T element : toClone) {
-            res.add(element);
-        }
-        return res;
-    }
-
-    /**
      * Given two lists a and b, this function returns a new list containing all
      * the elements of a not present in b and all the elements of b not present
      * in a. Lists a and b will be not modified by this call.
@@ -64,7 +45,7 @@ public final class ArrayUtils {
          * This clone is used both to keep the shorter list unmodified and to
          * allow usage of iterators without any concurrent modification.
          */
-        final List<T> clone = cloneList(shorter); 
+        final List<T> clone = new ArrayList<>(shorter); 
         final List<T> res = new ArrayList<T>(shorter.size());
         for (final T o : shorter) {
             /*
