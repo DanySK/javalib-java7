@@ -9,6 +9,7 @@ package org.danilopianini.lang.util;
 import java.io.Serializable;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
 import java.util.Objects;
 
 import com.google.common.hash.HashCode;
@@ -18,9 +19,9 @@ import com.google.common.hash.Hashing;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 /**
- * This class wraps java.lang.String and provides faster equals(). Used
- * internally to ensure better performances. The faster comparison is realized
- * by computing a hash internally (currently using Murmur 3), so be aware that
+ * This class wraps {@link String} and provides faster equals() at the expense
+ * of possible failures. Internally, it computes a high quality
+ * non-cryptographic hash (currently using Murmur 3 128bit), so be aware that
  * collisions may happen.
  * 
  */
@@ -32,10 +33,8 @@ public class FasterString implements Cloneable, Serializable, Comparable<FasterS
     private static final byte ENCODING_BASE = 36;
 
     private String base;
-    @SuppressFBWarnings(justification = "This hash is recomputed if needed after de-serialization.")
-    private transient HashCode hash;
-    private long hash64bit;
-    private int hash32bit;
+    private byte[] hash;
+    private int hash32;
     private final String s;
 
     /**
@@ -46,8 +45,8 @@ public class FasterString implements Cloneable, Serializable, Comparable<FasterS
      */
     public FasterString(final FasterString string) {
         s = string.s;
-        hash64bit = string.hash64bit;
-        hash32bit = string.hash32bit;
+        hash = string.hash;
+        hash32 = string.hash32;
     }
 
     /**
@@ -64,6 +63,7 @@ public class FasterString implements Cloneable, Serializable, Comparable<FasterS
         return s.charAt(index);
     }
 
+    @SuppressFBWarnings("CN_IDIOM_NO_SUPER_CALL")
     @Override
     public FasterString clone() {
         /*
@@ -78,9 +78,9 @@ public class FasterString implements Cloneable, Serializable, Comparable<FasterS
     }
 
     private void computeHashes() {
-        hash = HASHF.hashBytes(s.getBytes(CHARSET));
-        hash32bit = hash.asInt();
-        hash64bit = hash.asLong();
+        final HashCode hashCode = HASHF.hashBytes(s.getBytes(CHARSET));
+        hash32 = hashCode.asInt();
+        hash = hashCode.asBytes();
     }
 
     /**
@@ -93,8 +93,7 @@ public class FasterString implements Cloneable, Serializable, Comparable<FasterS
     public boolean equals(final FasterString fs) {
         return hashCode() == fs.hashCode()
                 && s.length() == fs.s.length()
-                && hash64bit == fs.hash64bit
-                && hash.equals(fs.hash);
+                && Arrays.equals(hash, fs.hash);
     }
 
     @Override
@@ -102,22 +101,12 @@ public class FasterString implements Cloneable, Serializable, Comparable<FasterS
         return o instanceof FasterString && equals((FasterString) o);
     }
 
-    /**
-     * @return a 64bit hash, computed with DJB2
-     */
-    public long hash64() {
-        if (hash == null) {
-            computeHashes();
-        }
-        return hash64bit;
-    }
-
     @Override
     public int hashCode() {
         if (hash == null) {
             computeHashes();
         }
-        return hash32bit;
+        return hash32;
     }
 
     /**
@@ -129,9 +118,8 @@ public class FasterString implements Cloneable, Serializable, Comparable<FasterS
              * If hash32 is negative, it is necessary to sum 1. This is because
              * -Integer.MIN_VALUE is equal to Integer.MIN_VALUE.
              */
-            final int h32 = hashCode() > 0 ? hash32bit : -(hash32bit + 1);
-            final long h64 = hash64bit > 0 ? hash64bit : -(hash64bit + 1);
-            base = Integer.toString(h32, ENCODING_BASE) + Long.toString(h64, ENCODING_BASE);
+            final int h32 = hashCode() > 0 ? hash32 : -(hash32 + 1);
+            base = Integer.toString(h32, ENCODING_BASE);
         }
         return base;
     }
