@@ -6,14 +6,16 @@
  *******************************************************************************/
 package org.danilopianini.concurrency;
 
+import java.io.Serializable;
 import java.util.concurrent.Semaphore;
 
 /**
  * This class implements a non-reentrant ReadWriteLock.
  * 
  */
-public class FastReadWriteLock {
+public class FastReadWriteLock implements Serializable {
 
+    private static final long serialVersionUID = 1L;
     private final Semaphore lock = new Semaphore(Integer.MAX_VALUE);
 
     /**
@@ -31,7 +33,8 @@ public class FastReadWriteLock {
     }
 
     /**
-     * Signals that the operation is done.
+     * Signals that the operation is done. No check is made on the identity of
+     * the caller, so improper releases will break the lock.
      */
     public void release() {
         if (lock.availablePermits() == 0) {
